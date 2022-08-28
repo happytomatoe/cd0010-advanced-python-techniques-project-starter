@@ -436,11 +436,11 @@ Additionally, the starter code includes unit tests that will help you check your
 
 At a high-level, we'll break down this project into a few manageable tasks.
 
-- Task 0: Inspect the data. (`data/neos.csv` and `data/cad.json`)
-- Task 1: Build models to represent the data. (`models.py`)
-- Task 2: Extract the data into a custom database (`extract.py` and `database.py`)
-- Task 3: Create filters to query the database to generate a stream of matching `CloseApproach` objects, and limit the result size. (`filters.py` and `database.py`)
-- Task 4: Save the data to a file. (`write.py`)
+- [X] Task 0: Inspect the data. (`data/neos.csv` and `data/cad.json`)
+- [X] Task 1: Build models to represent the data. (`models.py`)
+- [X] Task 2: Extract the data into a custom database (`extract.py` and `database.py`)
+- [ ] Task 3: Create filters to query the database to generate a stream of matching `CloseApproach` objects, and limit the result size. (`filters.py` and `database.py`)
+- [ ] Task 4: Save the data to a file. (`write.py`)
 
 As you implement these tasks, you'll unlock more and more functionality. When Task 2 is complete, you'll be able to run the `inspect` subcommand. When Task 3 is complete, you'll be able to run the `query` subcommand without the `--outfile` argument. When Task 4 is complete, you'll be able to run everything.
 
