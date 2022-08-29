@@ -13,10 +13,11 @@ the supplied `CloseApproach`.
 
 The `limit` function simply limits the maximum number of values produced by an
 iterator.
-
-You'll edit this file in Tasks 3a and 3c.
 """
+import itertools
 import operator
+
+from models import CloseApproach
 
 
 class UnsupportedCriterionError(NotImplementedError):
@@ -38,6 +39,7 @@ class AttributeFilter:
     Concrete subclasses can override the `get` classmethod to provide custom
     behavior to fetch a desired attribute from the given `CloseApproach`.
     """
+
     def __init__(self, op, value):
         """Construct a new `AttributeFilter` from an binary predicate and a reference value.
 
@@ -57,7 +59,7 @@ class AttributeFilter:
         return self.op(self.get(approach), self.value)
 
     @classmethod
-    def get(cls, approach):
+    def get(cls, approach: CloseApproach):
         """Get an attribute of interest from a close approach.
 
         Concrete subclasses must override this method to get an attribute of
@@ -70,6 +72,46 @@ class AttributeFilter:
 
     def __repr__(self):
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
+
+
+class DistanceAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
+    """Attribute filter for close approach distance property"""
+
+    @classmethod
+    def get(cls, approach: CloseApproach):
+        return approach.distance
+
+
+class HazardousAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
+    """Attribute filter for close approach neo's hazardous property"""
+
+    @classmethod
+    def get(cls, approach: CloseApproach):
+        return approach.neo.hazardous
+
+
+class DiameterAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
+    """Attribute filter for close approach neo's diameter property"""
+
+    @classmethod
+    def get(cls, approach: CloseApproach):
+        return approach.neo.diameter
+
+
+class DateAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
+    """Attribute filter for close approach date property"""
+
+    @classmethod
+    def get(cls, approach: CloseApproach):
+        return approach.time.date()
+
+
+class VelocityAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
+    """Attribute filter for close approach velocity property"""
+
+    @classmethod
+    def get(cls, approach: CloseApproach):
+        return approach.velocity
 
 
 def create_filters(
@@ -108,8 +150,32 @@ def create_filters(
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
-    return ()
+    res = []
+    if date:
+        res.append(DateAttributeFilter(operator.eq, date))
+    if start_date:
+        res.append(DateAttributeFilter(operator.ge, start_date))
+    if end_date:
+        res.append(DateAttributeFilter(operator.le, end_date))
+
+    if distance_min:
+        res.append(DistanceAttributeFilter(operator.ge, distance_min))
+    if distance_max:
+        res.append(DistanceAttributeFilter(operator.le, distance_max))
+
+    if velocity_min:
+        res.append(VelocityAttributeFilter(operator.ge, velocity_min))
+    if velocity_max:
+        res.append(VelocityAttributeFilter(operator.le, velocity_max))
+
+    if diameter_min:
+        res.append(DiameterAttributeFilter(operator.ge, diameter_min))
+    if diameter_max:
+        res.append(DiameterAttributeFilter(operator.le, diameter_max))
+
+    if hazardous is not None:
+        res.append(HazardousAttributeFilter(operator.eq, hazardous))
+    return res
 
 
 def limit(iterator, n=None):
@@ -121,5 +187,4 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
-    return iterator
+    return itertools.islice(iterator, n) if n else iterator

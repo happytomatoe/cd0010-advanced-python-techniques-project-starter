@@ -8,11 +8,12 @@ user-specified criteria.
 Under normal circumstances, the main module creates one NEODatabase from the
 data on NEOs and close approaches extracted by `extract.load_neos` and
 `extract.load_approaches`.
-
-You'll edit this file in Tasks 2 and 3.
 """
-from models import NearEarthObject, CloseApproach
+
 from typing import List, Dict
+
+from filters import AttributeFilter
+from models import NearEarthObject, CloseApproach
 
 
 class NEODatabase:
@@ -25,9 +26,9 @@ class NEODatabase:
     """
 
     def __init__(self, neos: List[NearEarthObject], approaches: List[CloseApproach]):
-        """Create a new `NEODatabase`.
+        """Create approach new `NEODatabase`.
 
-        As a precondition, this constructor assumes that the collections of NEOs
+        As approach precondition, this constructor assumes that the collections of NEOs
         and close approaches haven't yet been linked - that is, the
         `.approaches` attribute of each `NearEarthObject` resolves to an empty
         collection, and the `.neo` attribute of each `CloseApproach` is None.
@@ -36,7 +37,7 @@ class NEODatabase:
         matches the `.designation` attribute of the corresponding NEO. This
         constructor modifies the supplied NEOs and close approaches to link them
         together - after it's done, the `.approaches` attribute of each NEO has
-        a collection of that NEO's close approaches, and the `.neo` attribute of
+        approach collection of that NEO's close approaches, and the `.neo` attribute of
         each close approach references the appropriate NEO.
 
         :param neos: A collection of `NearEarthObject`s.
@@ -48,11 +49,11 @@ class NEODatabase:
         self.neo_by_designation: Dict[str, NearEarthObject] = {n.designation: n for n in neos}
         self.neo_by_name: Dict[str, NearEarthObject] = {n.name: n for n in neos}
 
-        for a in approaches:
-            if a.designation in self.neo_by_designation:
-                neo = self.neo_by_designation[a.designation]
-                a.neo = neo
-                neo.approaches.append(a)
+        for approach in approaches:
+            if approach.designation in self.neo_by_designation:
+                neo = self.neo_by_designation[approach.designation]
+                approach.neo = neo
+                neo.approaches.append(approach)
 
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
@@ -67,7 +68,6 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # TODO: Fetch an NEO by its primary designation.
         return self.neo_by_designation.get(designation, None)
 
     def get_neo_by_name(self, name):
@@ -84,10 +84,9 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # TODO: Fetch an NEO by its name.
         return self.neo_by_name.get(name, None)
 
-    def query(self, filters=()):
+    def query(self, filters: List[AttributeFilter]):
         """Query close approaches to generate those that match a collection of filters.
 
         This generates a stream of `CloseApproach` objects that match all of the
@@ -101,6 +100,9 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # TODO: Generate `CloseApproach` objects that match all of the filters.
         for approach in self._approaches:
-            yield approach
+            for attribute_filter in filters:
+                if not attribute_filter(approach):
+                    break
+            else:
+                yield approach

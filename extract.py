@@ -24,17 +24,10 @@ def load_neos(neo_csv_path):
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    # pdes - the primary designation of the NEO. This is a unique identifier in the database, and its "name" to computer systems.
-    # name - the International Astronomical Union (IAU) name of the NEO. This is its "name" to humans.
-    # pha - whether NASA has marked the NEO as a "Potentially Hazardous Asteroid,"
-    # roughly meaning that it's large and can come quite close to Earth.
-    # diameter - the NEO's diameter (from an equivalent sphere) in kilometers.
-
     res = []
-    with open(neo_csv_path, 'r') as f:
-        reader = csv.DictReader(f)
+    with open(neo_csv_path, 'r', encoding="utf-8") as file:
+        reader = csv.DictReader(file)
         for row in reader:
-            # //designation, name, diameter, hazardous
             res.append(NearEarthObject(row['pdes'], row['name'], row['diameter'], row['pha']))
     return res
 
@@ -45,28 +38,14 @@ def load_approaches(cad_json_path):
     :param cad_json_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    # des - primary designation of the asteroid or comet (e.g., 443, 2000 SG344)
-    # orbit_id - orbit ID
-    # jd - time of close-approach (JD Ephemeris Time)
-    # cd - time of close-approach (formatted calendar date/time, in UTC)
-    # dist - nominal approach distance (au)
-    # dist_min - minimum (3-sigma) approach distance (au)
-    # dist_max - maximum (3-sigma) approach distance (au)
-    # v_rel - velocity relative to the approach body at close approach (km/s)
-    # v_inf - velocity relative to a massless body (km/s)
-    # t_sigma_f - 3-sigma uncertainty in the time of close-approach (formatted in days, hours, and minutes; days are not included if zero; example "13:02" is 13 hours 2 minutes; example "2_09:08" is 2 days 9 hours 8 minutes)
-    # h - absolute magnitude H (mag)
-
-    #
-
-    # Test if there is an OOM
     res = []
     required_fields = ['des', 'cd', 'dist', 'v_rel']
 
-    with open(cad_json_path, 'r') as f:
-        data = json.load(f)
+    with open(cad_json_path, 'r', encoding="utf-8") as file:
+        data = json.load(file)
         fields = data['fields']
         indexes = [fields.index(t) for t in required_fields]
-        for t in data['data']:
-            res.append(CloseApproach(t[indexes[0]], t[indexes[1]], t[indexes[2]], t[indexes[3]]))
+        for approach in data['data']:
+            res.append(
+                CloseApproach(approach[indexes[0]], approach[indexes[1]], approach[indexes[2]], approach[indexes[3]]))
     return res

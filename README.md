@@ -1053,3 +1053,9 @@ Over the course of this project (specifically, in Task 4), you've likely created
 In addition to the functionality requirements detailed above, your submission will be assessed on how well it follows best practices in Python. Roughly speaking, "best practices" can be divided into two categories - mechanics and design. Good Python mechanics adhere to [PEP 8](https://www.python.org/dev/peps/pep-0008/) - the style guide for Python code - and [PEP 257](https://www.python.org/dev/peps/pep-0257/) - docstring conventions. These address rules for naming, spacing, commenting, and several common programming patterns. Additionally, good general programming mechanics that you are expected to follow include removing starter code markings, removing extraneous print statements, and documenting your code. Python design refers to the higher-level organization of your code - the interfaces and implementation boundaries defined by your code objects. Many interface and implementation boundaries are already imposed by the organization of the starter code; however, there are still several situations (particularly in Tasks 3 and 4) in which the organization of your code can reflect poorly on or reflect well on the organization of the problem and your choice of solution.
 
 Complete details on grading criteria are available in the attached rubric.
+
+
+TODO:
+- [ ] $ python3 main.py query --start-date 2030-01-01 --end-date 2030-01-31 --max-diameter 0.05 --not-hazardous --limit 2
+A CloseApproach on 2030-01-07 20:59 by '2010 GH7' at a distance of 0.462599268642389 au and a velocity of 18.8387438021909 km/s.
+Should give 2 objects in result

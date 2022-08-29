@@ -10,7 +10,10 @@ Although `datetime`s already have human-readable string representations, those
 representations display seconds, but NASA's data (and our datetimes!) don't
 provide that level of resolution, so the output format also will not.
 """
+import calendar
 import datetime
+
+months_abbr = list(calendar.month_abbr)
 
 
 def cd_to_datetime(calendar_date):
@@ -20,16 +23,19 @@ def cd_to_datetime(calendar_date):
     English locale's month names. For example, December 31st, 2020 at noon is:
 
         2020-Dec-31 12:00
-
+        01234567890123456
     This will become the Python object `datetime.datetime(2020, 12, 31, 12, 0)`.
 
     :param calendar_date: A calendar date in YYYY-bb-DD hh:mm format.
     :return: A naive `datetime` corresponding to the given calendar date and time.
     """
-    return datetime.datetime.strptime(calendar_date, "%Y-%b-%d %H:%M")
+
+    year, month, day = int(calendar_date[:4]), int(months_abbr.index(calendar_date[5:8])), int(calendar_date[9:11])
+    hour, minute = int(calendar_date[12:14]), int(calendar_date[15:])
+    return datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
 
 
-def datetime_to_str(dt):
+def datetime_to_str(dt: datetime.datetime):
     """Convert a naive Python datetime into a human-readable string.
 
     The default string representation of a datetime includes seconds; however,
@@ -41,4 +47,4 @@ def datetime_to_str(dt):
     :param dt: A naive Python datetime.
     :return: That datetime, as a human-readable string without seconds.
     """
-    return datetime.datetime.strftime(dt, "%Y-%m-%d %H:%M")
+    return f'{dt.year}-{dt.month:02d}-{dt.day:02d} {dt.time().hour:02d}:{dt.time().minute:02d}'
