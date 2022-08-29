@@ -193,7 +193,7 @@ out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
-
+profile
 # JIRA plugin
 atlassian-ide-plugin.xml
 
