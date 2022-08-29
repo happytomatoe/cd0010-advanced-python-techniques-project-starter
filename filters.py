@@ -62,55 +62,58 @@ class AttributeFilter:
     def get(cls, approach: CloseApproach):
         """Get an attribute of interest from a close approach.
 
-        Concrete subclasses must override this method to get an attribute of
-        interest from the supplied `CloseApproach`.
-
         :param approach: A `CloseApproach` on which to evaluate this filter.
         :return: The value of an attribute of interest, comparable to `self.value` via `self.op`.
         """
         raise UnsupportedCriterionError
 
     def __repr__(self):
+        """Return general representation of the filter."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 
 class DistanceAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
-    """Attribute filter for close approach distance property"""
+    """Attribute filter for close approach distance property."""
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Get an attribute of interest from a close approach."""
         return approach.distance
 
 
 class HazardousAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
-    """Attribute filter for close approach neo's hazardous property"""
+    """Attribute filter for close approach neo's hazardous property."""
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Get an attribute of interest from a close approach."""
         return approach.neo.hazardous
 
 
 class DiameterAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
-    """Attribute filter for close approach neo's diameter property"""
+    """Attribute filter for close approach neo's diameter property."""
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Get an attribute of interest from a close approach."""
         return approach.neo.diameter
 
 
 class DateAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
-    """Attribute filter for close approach date property"""
+    """Attribute filter for close approach date property."""
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Get an attribute of interest from a close approach."""
         return approach.time.date()
 
 
 class VelocityAttributeFilter(AttributeFilter):  # pylint: disable=too-few-public-methods
-    """Attribute filter for close approach velocity property"""
+    """Attribute filter for close approach velocity property."""
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Get an attribute of interest from a close approach."""
         return approach.velocity
 
 

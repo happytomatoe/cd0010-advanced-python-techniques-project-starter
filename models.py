@@ -14,8 +14,6 @@ A `NearEarthObject` maintains a collection of its close approaches, and a
 The functions that construct these objects use information extracted from the
 data files from NASA, so these objects should be able to handle all of the
 quirks of the data set, such as missing names and unknown diameters.
-
-You'll edit this file in Task 1.
 """
 from datetime import datetime
 from typing import List
@@ -35,6 +33,7 @@ class NearEarthObject:
     initialized to an empty collection, but eventually populated in the
     `NEODatabase` constructor.
     """
+
     designation: str
     name: str
     diameter: float
@@ -71,7 +70,7 @@ class NearEarthObject:
         return f'{self.designation} ({self.name})'
 
     def serialize(self):
-        """Returns object's view intended for serialization"""
+        """Return object's view intended for serialization."""
         return {
             'designation': self.designation,
             'name': self.name if self.name else '',
@@ -106,6 +105,7 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
+
     designation: str
     name: str
     time: datetime.date
@@ -113,9 +113,9 @@ class CloseApproach:
     velocity: float
     neo: NearEarthObject
 
-    # If you make changes, be sure to update the comments in this file.
     def __init__(self, designation, calendar_date, distance, velocity, **info):
         """Create a new `CloseApproach`.
+
         :param designation: primary designation of the asteroid or comet
         :param calendar_date: time of close-approach (formatted calendar date/time, in UTC)
         :param distance: nominal approach distance (au)
@@ -131,7 +131,7 @@ class CloseApproach:
 
     @property
     def designation(self):
-        """Primary designation of the asteroid or comet"""
+        """Primary designation of the asteroid or comet."""
         return self._designation
 
     @property
@@ -151,7 +151,7 @@ class CloseApproach:
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
 
     def serialize(self):
-        """Returns object's view intended for serialization"""
+        """Return object's view intended for serialization."""
         return {
             'datetime_utc': self.time_str,
             'distance_au': self.distance,

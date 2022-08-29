@@ -29,7 +29,6 @@ def cd_to_datetime(calendar_date):
     :param calendar_date: A calendar date in YYYY-bb-DD hh:mm format.
     :return: A naive `datetime` corresponding to the given calendar date and time.
     """
-
     year = int(calendar_date[:4])
     month = int(months_abbr.index(calendar_date[5:8]))
     day = int(calendar_date[9:11])
