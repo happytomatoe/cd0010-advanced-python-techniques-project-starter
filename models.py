@@ -43,12 +43,19 @@ class NearEarthObject:
 
     def __init__(self, designation: str, name: str, diameter: str, hazardous: str, **info):
         """Create a new `NearEarthObject`.
-        :param designation: the primary designation of the NEO. This is a unique identifier in the database,
-        and its "name" to computer systems.
-        :param name: the International Astronomical Union (IAU) name of the NEO. This is its "name" to humans.
-        :param diameter:
+
+        :param designation: the primary designation of the NEO.
+        This is a unique identifier in the database, and its "name" to computer systems.
+
+        :param name: the International Astronomical Union (IAU) name of the NEO.
+         This is its "name" to humans.
+
+        :param diameter: the NEO's diameter (from an equivalent sphere) in kilometers.
+
         :param hazardous: whether NASA has marked the NEO as a "Potentially Hazardous Asteroid",
-         roughly meaning that it's large and can come quite close to Earth. "Y" is interpreted as True
+         roughly meaning that it's large and can come quite close to Earth.
+         "Y" is interpreted as True
+
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
         self.designation = designation
@@ -64,7 +71,7 @@ class NearEarthObject:
         return f'{self.designation} ({self.name})'
 
     def serialize(self):
-        """Returns object view intended for serialization"""
+        """Returns object's view intended for serialization"""
         return {
             'designation': self.designation,
             'name': self.name if self.name else '',
@@ -134,8 +141,9 @@ class CloseApproach:
 
     def __str__(self):
         """Return `str(self)`."""
-        return f"A CloseApproach on {self.time_str} by '{self.designation}' at a distance of {self.distance:.2f} au" \
-               f" and a velocity of {self.velocity:.2f} km/s."
+        return f"A CloseApproach on {self.time_str} by '{self.designation}' " \
+               f"at a distance of {self.distance:.2f} au " \
+               f"and a velocity of {self.velocity:.2f} km/s."
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
@@ -143,7 +151,7 @@ class CloseApproach:
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
 
     def serialize(self):
-        """Returns object view intended for serialization"""
+        """Returns object's view intended for serialization"""
         return {
             'datetime_utc': self.time_str,
             'distance_au': self.distance,

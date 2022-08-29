@@ -30,7 +30,9 @@ def cd_to_datetime(calendar_date):
     :return: A naive `datetime` corresponding to the given calendar date and time.
     """
 
-    year, month, day = int(calendar_date[:4]), int(months_abbr.index(calendar_date[5:8])), int(calendar_date[9:11])
+    year = int(calendar_date[:4])
+    month = int(months_abbr.index(calendar_date[5:8]))
+    day = int(calendar_date[9:11])
     hour, minute = int(calendar_date[12:14]), int(calendar_date[15:])
     return datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
 

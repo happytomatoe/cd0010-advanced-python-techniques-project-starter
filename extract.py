@@ -46,6 +46,7 @@ def load_approaches(cad_json_path):
         fields = data['fields']
         indexes = [fields.index(t) for t in required_fields]
         for approach in data['data']:
-            res.append(
-                CloseApproach(approach[indexes[0]], approach[indexes[1]], approach[indexes[2]], approach[indexes[3]]))
+            res.append(CloseApproach(
+                    approach[indexes[0]], approach[indexes[1]],
+                    approach[indexes[2]], approach[indexes[3]]))
     return res
