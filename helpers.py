@@ -23,7 +23,7 @@ def cd_to_datetime(calendar_date):
     English locale's month names. For example, December 31st, 2020 at noon is:
 
         2020-Dec-31 12:00
-        01234567890123456
+
     This will become the Python object `datetime.datetime(2020, 12, 31, 12, 0)`.
 
     :param calendar_date: A calendar date in YYYY-bb-DD hh:mm format.

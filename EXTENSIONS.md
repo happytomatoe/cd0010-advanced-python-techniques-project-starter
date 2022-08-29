@@ -1,1 +1,3 @@
-Changed the code in helpers.py to more performant version
+- Changed the code in helpers.py to more performant version
+- Remove the message from the assertion that compare expected actual dataset to see the diff test/test_query.py 
+- 

@@ -49,6 +49,7 @@ from database import NEODatabase
 from filters import create_filters, limit
 from write import write_to_csv, write_to_json
 
+
 # Paths to the root of the project and the `data` subfolder.
 PROJECT_ROOT = pathlib.Path(__file__).parent.resolve()
 DATA_ROOT = PROJECT_ROOT / 'data'
